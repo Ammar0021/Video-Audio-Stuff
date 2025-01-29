@@ -1,4 +1,4 @@
-from pytube import YouTube
+from pytubefix import YouTube
 import sys
 from colorama import init, Fore
 
@@ -8,7 +8,7 @@ print(Fore.RED + "Enter the URL:", end=' ')
 url = input()
 
 try:
-    yt = YouTube(url)
+    yt = YouTube(url, use_oauth=True, allow_oauth_cache=True)
 except Exception as e:
     print(Fore.RED + f"Failed to access video: {e}")
     sys.exit()
