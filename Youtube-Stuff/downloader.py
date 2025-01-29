@@ -2,7 +2,7 @@ from pytube import YouTube
 import sys
 from colorama import init, Fore
 
-init(autoreset=True) #Colorama initialised
+init(autoreset=True) # Colorama initialised
 
 print(Fore.RED + "Enter the URL:", end=' ')
 url = input()
@@ -27,6 +27,7 @@ for stream in audio_streams:
 stream_type = input("\nWould you like to download video or audio? (Enter 'v' or 'a'): ").strip().lower()
 itag_choice = input("Enter the itag of the quality you want to download: ")
 
+chosen_stream = None
 if stream_type in ["v", "video"]:
     chosen_stream = video_streams.get_by_itag(itag_choice)
 elif stream_type in ["a", "audio"]:
@@ -34,9 +35,8 @@ elif stream_type in ["a", "audio"]:
 else:
     print("Invalid choice for stream type.")
 
-if chosen_stream: 
-    chosen_stream.download('/path/to/save')  #Replace with your path
-    print(f"Downloaded: {chosen_stream.resolution if stream_type in ["v", "video"] else chosen_stream.abr} {stream_type}")
+if chosen_stream:
+    chosen_stream.download('/path/to/save')  # Replace with your path
+    print(f"Downloaded: {chosen_stream.resolution if stream_type in ['v', 'video'] else chosen_stream.abr} {stream_type}")
 else:
     print("Invalid itag selected.")
-
