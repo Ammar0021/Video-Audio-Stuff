@@ -10,11 +10,19 @@ url = input()
 try:
     yt = YouTube(url)
 except Exception as e:
-    print(f"Failed to access video: {e}")
+    print(Fore.RED + f"Failed to access video: {e}")
     sys.exit()
 
 video_streams = yt.streams.filter(progressive=True)
 audio_streams = yt.streams.filter(only_audio=True)
+
+if not video_streams:
+    print(Fore.RED + "No video streams available.")
+    sys.exit()
+
+if not audio_streams:
+    print(Fore.RED + "No audio streams available.")
+    sys.exit()
 
 print("\nAvailable video qualities:")
 for stream in video_streams:
@@ -33,10 +41,11 @@ if stream_type in ["v", "video"]:
 elif stream_type in ["a", "audio"]:
     chosen_stream = audio_streams.get_by_itag(itag_choice)
 else:
-    print("Invalid choice for stream type.")
+    print(Fore.RED + "Invalid choice for stream type.")
+    sys.exit()
 
 if chosen_stream:
     chosen_stream.download('/path/to/save')  # Replace with your path
-    print(f"Downloaded: {chosen_stream.resolution if stream_type in ['v', 'video'] else chosen_stream.abr} {stream_type}")
+    print(Fore.GREEN + f"Downloaded: {chosen_stream.resolution if stream_type in ['v', 'video'] else chosen_stream.abr} {stream_type}")
 else:
-    print("Invalid itag selected.")
+    print(Fore.RED + "Invalid itag selected.")
